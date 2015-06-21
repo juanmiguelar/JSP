@@ -1,5 +1,5 @@
-
 <%@page language="java" contentType="text/html" isErrorPage="false" errorPage="error.jsp" %>
+<%@page import="java.util.Date"%>
 <%-- 
     Document   : Hello
     Created on : 21-jun-2015, 15:07:58
@@ -11,9 +11,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Hola Mundo</title>
     </head>
     <body>
         <h1>Hello World!</h1>
+        <p>La hora del servidor es <%= new Date()%></p>
     </body>
 </html>
