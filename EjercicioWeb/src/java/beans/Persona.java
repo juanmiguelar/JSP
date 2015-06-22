@@ -6,11 +6,13 @@
 
 package beans;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Juan Miguel Arias Mejias
  */
-public class Persona {
+public class Persona implements Serializable{
     
     private String nombre;
     private int edad;
@@ -40,4 +42,11 @@ public class Persona {
     public void setEdad(int edad) {
         this.edad = edad;
     }
+
+    @Override
+    public String toString() {
+        return "Persona{" + "nombre=" + nombre + ", edad=" + edad + '}';
+    }
+    
+    
 }

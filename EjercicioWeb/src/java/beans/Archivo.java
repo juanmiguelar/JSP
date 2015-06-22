@@ -13,6 +13,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,36 +41,22 @@ public class Archivo {
 
     public void registrar(Persona persona) {
         lista.add(persona);
+        try {
+            guardar();
+        } catch (IOException ex) {
+            Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void guardar() throws IOException {
+        close();
         open();
         w.reset();
         for (int i = 0; i < lista.size(); i++) {
 
-            escribir(lista.get(i));
+            w.writeObject(lista.get(i));
         }
         close();
-    }
-
-    public void escribir(Persona persona) {
-
-        try {
-            w.writeObject(persona);
-
-        } catch (IOException e) {
-        }
-    }
-
-    public Persona leer() {
-        try {
-            return (Persona) r.readObject();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
     }
 
     public String obtenerRegistros() {
@@ -89,7 +77,7 @@ public class Archivo {
 
             while (true) {
 
-                Persona p = leer();
+                Persona p = (Persona) r.readObject();
 
                 if (p != null) {
                     lista.add(p);
@@ -99,7 +87,8 @@ public class Archivo {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
         }
 
     }
@@ -126,8 +115,9 @@ public class Archivo {
 
     public static void main(String[] args) {
         Archivo archivo = new Archivo();
-        archivo.registrar(new Persona("Miguel", 15));
+        //archivo.registrar(new Persona("Juan", 15));
         System.out.println(archivo.obtenerRegistros());
+
     }
 
 }
