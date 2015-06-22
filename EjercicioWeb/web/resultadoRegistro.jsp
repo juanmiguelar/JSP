@@ -4,7 +4,7 @@
     Author     : Juan
 --%>
 
-<%@page import="beans.Persona"%>
+<%@page import="javax.swing.JOptionPane"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,9 +14,9 @@
         <title>Resultado Registro</title>
         <%@include file="header.html" %>
     </head>
-    <body>
+    
         <%@include file='menu.html' %>
-        <div id='resultado'>
+        
             <jsp:useBean id='persona' scope="session" class="beans.Persona"/>
             <jsp:useBean id='archivo' scope="session" class="beans.Archivo"/>
             <jsp:setProperty name="persona" property="nombre" param="nombre"/>
@@ -30,7 +30,8 @@
                 }
                 
                 String nombre = request.getParameter("nombre");
-                archivo.registrar(new Persona(nombre, edad));
+                archivo.registrar(new beans.Persona(nombre, edad));
+                JOptionPane.showMessageDialog(null, "Registro completo");
             %>
 
             <jsp:setProperty name="persona" property="edad" value= '<%= edad%>'/>
@@ -38,7 +39,7 @@
             <h3>Sus datos son: </h3>
             <p>Nombre: <jsp:getProperty name="persona" property="nombre"/></p>
             <p>Edad: <jsp:getProperty name="persona" property="edad"/></p>
-        </div>
-    </body>
+        
+    
     <%@include file='footer.html' %>
 </html>
