@@ -7,14 +7,20 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    
     <head>
+        <link rel='stylesheet' type="text/css" href='estilo.css'>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ejercicio JSP</title>
+        <%@include file="header.html" %>
     </head>
     <body>
-        <h1>Bienvenido a nuestra Web</h1>
-        <p>Registrarse es muy facil</p>
-        <span>Solo ingresa aqui: </span>
-        <a href='registroPersonas.html'>Registrate Ya!</a>
+        <h3>Bienvenido a nuestra Web</h3>
+        <%@include file='menu.html' %>
+        
+        <div style='text-align: right'>
+            <img id='fenix-img' src='Fenix.png'>
+        </div>
     </body>
+    <%@include file='footer.html' %>
 </html>
