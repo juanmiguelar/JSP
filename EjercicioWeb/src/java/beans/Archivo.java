@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,25 +20,42 @@ import java.io.ObjectOutputStream;
  */
 public class Archivo {
 
-    File file = new File("archivo.txt");
+    File file;
     ObjectOutputStream w;
     ObjectInputStream r;
+
+    private ArrayList<Persona> lista = new ArrayList<>();
 
     public Archivo() {
         try {
 
-            w = new ObjectOutputStream(new FileOutputStream(file));
-            r = new ObjectInputStream(new FileInputStream(file));
+            file = new File(getClass().getResource("file.txt").toURI());
+            init();
 
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
+        } catch (URISyntaxException ex) {
+            System.err.println(ex.getMessage());
         }
     }
 
     public void registrar(Persona persona) {
+        lista.add(persona);
+    }
+
+    public void guardar() throws IOException {
+        open();
+        w.reset();
+        for (int i = 0; i < lista.size(); i++) {
+
+            escribir(lista.get(i));
+        }
+        close();
+    }
+
+    public void escribir(Persona persona) {
 
         try {
             w.writeObject(persona);
+
         } catch (IOException e) {
         }
     }
@@ -53,20 +72,36 @@ public class Archivo {
     }
 
     public String obtenerRegistros() {
-        open();
         StringBuilder sb = new StringBuilder();
 
-        while (true) {
-            Persona temp = leer();
-            if (temp != null) {
-                sb.append(temp).append("\n");
-            } else {
-                break;
-            }
+        for (int i = 0; i < lista.size(); i++) {
+            sb.append(lista.get(i)).append("\n");
         }
 
-        close();
         return sb.toString();
+    }
+
+    private void init() {
+
+        open();
+
+        try {
+
+            while (true) {
+
+                Persona p = leer();
+
+                if (p != null) {
+                    lista.add(p);
+                } else {
+                    close();
+                    return;
+                }
+            }
+
+        } catch (Exception e) {
+        }
+
     }
 
     public void open() {
@@ -87,6 +122,12 @@ public class Archivo {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void main(String[] args) {
+        Archivo archivo = new Archivo();
+        archivo.registrar(new Persona("Miguel", 15));
+        System.out.println(archivo.obtenerRegistros());
     }
 
 }
