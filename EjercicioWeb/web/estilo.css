@@ -13,8 +13,18 @@ header{
 }
 
 footer{
-   position:absolute;
-   bottom: 5px;
-   height: 40px;
+    position:absolute;
+    bottom: 5px;
+    height: 40px;
+}
+
+#seccion-formulario{
+    width: 300px;
+    margin: 0 auto;
+    
+}
+
+#formulario{
+    text-align: left;
 }
 

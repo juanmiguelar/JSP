@@ -4,6 +4,7 @@
     Author     : Juan
 --%>
 
+<%@page import="beans.Persona"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,6 +18,7 @@
         <%@include file='menu.html' %>
         <div id='resultado'>
             <jsp:useBean id='persona' scope="session" class="beans.Persona"/>
+            <jsp:useBean id='archivo' scope="session" class="beans.Archivo"/>
             <jsp:setProperty name="persona" property="nombre" param="nombre"/>
 
             <%
@@ -26,9 +28,12 @@
 
                     edad = Integer.parseInt(request.getParameter("edad"));
                 }
+                
+                String nombre = request.getParameter("nombre");
+                archivo.registrar(new Persona(nombre, edad));
             %>
 
-            <jsp:setProperty name="persona" property="edad" param= '<%= edad%>'/>
+            <jsp:setProperty name="persona" property="edad" value= '<%= edad%>'/>
 
             <h3>Sus datos son: </h3>
             <p>Nombre: <jsp:getProperty name="persona" property="nombre"/></p>
