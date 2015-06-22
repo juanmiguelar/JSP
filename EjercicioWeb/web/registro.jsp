@@ -15,6 +15,19 @@
     </head>
     <body>
         <%@include file='menu.html' %>
+        <form method='get' action="resultadoRegistro.jsp">
+            <p>Complete el formulario</p>
+            <label>Nombre: </label>
+            <input type='text' name="nombre">
+            <br>
+            
+            <label>Edad: </label>
+            <input type='text' name="edad" size='3' maxlength='3'>
+            <br>
+            
+            <input type='submit' value='Registrar'>
+            <input type='reset' value="Limpiar registro">
+        </form>
     </body>
     <%@include file='footer.html' %>
 </html>
